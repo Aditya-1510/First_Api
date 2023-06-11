@@ -28,3 +28,11 @@
 // 3. publications
 // tp get all publication                            done
 // get a list of pubiication based on the books       done
+
+
+
+
+//post request
+
+//add new publication
+// add new books

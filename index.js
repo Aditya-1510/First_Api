@@ -1,8 +1,11 @@
 const express=require("express");
+const bodyParser=require("body-parser");
 //database
 const database= require("./database");
 const booky=express();
 
+booky.use(bodyParser.urlencoded({extended:true}));
+booky.use(bodyParser.json());
 ///////////////////books Api ////////////////
 
 
@@ -148,10 +151,46 @@ methods          get
     return res.json({publication:getSpecificPublication});
   })
 
+/////////////post requets///////////////////
 
+/* Route         /book/new
+Description     add new books
+Access           public
+parameters       New
+methods          post
+ */
+ booky.post("/book/new",(req,res)=>{
+   const newBook =req.body;
+   database.books.push(newBook);
+   return res.json({updateBook:database.books});
+ });
 
+ /* Route         /author/new
+ Description     add new author
+ Access           public
+ parameters       new
+ methods          post
+  */
+  booky.post("/author/new",(req,res)=>{
+    const newAuthor=req.body;
+    database.authors.push(newAuthor);
+    return res.json({updateAuthor:database.authors})
+  });
 
-
+  /* Route         /publication/new
+  Description     add new publication
+  Access           public
+  parameters       new
+  methods          post
+   */
+booky.post("/publication/new",(req,res)=>{
+  const newPublication =req.body;
+  database.publications.push(newPublication);
+    if(database.publications === newPublication){
+  return res.json({error:`Such File is Already Exist`})
+  }
+  return res.json(database.publications);
+})
 //port
 booky.listen(3000,() =>{
   console.log("post is running on server 3000");
